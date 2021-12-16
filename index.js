@@ -11,7 +11,8 @@ const provider = ethers.getDefaultProvider(network, {
 async function run() {
   wallet = new ethers.Wallet.fromMnemonic(process.env.MAINNET_MNEMONIC)
   wallet = wallet.connect(provider)
-  auction = new ethers.Contract(contracts.ReserveAuction.networks['1'].address, contracts.ReserveAuction.abi, wallet)
+  // auction = new ethers.Contract(contracts.ReserveAuction.networks['1'].address, contracts.ReserveAuction.abi, wallet)
+  hpwithdraw = new ethers.Contract(contracts.House_Plants.networks['1'].address, contracts.House_Plants.abi, wallet)
 
   overrides = {
     gasLimit: 500000,
@@ -31,10 +32,10 @@ async function run() {
     ]
   }
 
-  work = 11000003
-  endAuctionTX = await auction.endAuction(work, overrides)
-  console.log({endAuctionTX})
-  resolved = await endAuctionTX.wait()
+  // work = 11000003
+  withdrawTX = await hpwithdraw.withdraw(/* work,  */overrides)
+  console.log({withdrawTX})
+  resolved = await withdrawTX.wait()
   console.log({resolved})
 }
 
